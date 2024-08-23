@@ -3,8 +3,10 @@ package security.jwt.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -25,18 +27,17 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filter(HttpSecurity httpSecurity) throws Exception {
 
-        // csrf
-        httpSecurity.csrf((auth) -> auth.disable());
-
-        // From 로그인 방식
-        httpSecurity.formLogin((auth) -> auth.disable());
-
-        // http basic
-        httpSecurity.httpBasic((auth) -> auth.disable());
+        httpSecurity.headers(AbstractHttpConfigurer::disable).httpBasic(Customizer.withDefaults())
+                .formLogin(Customizer.withDefaults()).csrf(AbstractHttpConfigurer::disable);
 
         httpSecurity.authorizeHttpRequests(
-                (auth) -> auth.requestMatchers("/login", "/", "join").permitAll().requestMatchers("/admin")
-                        .hasRole("ADMIN").anyRequest().authenticated());
+                (auth) -> auth.requestMatchers("/", "/login", "/loginProc", "/join", "/join/new").permitAll()
+                        .requestMatchers("/admin").hasRole("ADMIN").requestMatchers("/my/**")
+                        .hasAnyRole("ADMIN", "USER").anyRequest().authenticated());
+
+        
+        httpSecurity.formLogin((auth) -> auth.loginPage("/login").loginProcessingUrl("/loginProc").permitAll());
+
 
         // 세션 설정 : JWT를 통한 인증/인가를 위해서 세션을 stateless 상태로 설정
         httpSecurity.sessionManagement((session) -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
