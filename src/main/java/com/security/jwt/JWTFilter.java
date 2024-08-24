@@ -32,8 +32,6 @@ public class JWTFilter extends OncePerRequestFilter {
 
             if(jwtUtil.isExpired(token)) {
 
-                System.out.println("token 만료");
-
                 filterChain.doFilter(request, response);
 
                 return;
@@ -41,9 +39,6 @@ public class JWTFilter extends OncePerRequestFilter {
 
             String username = jwtUtil.getUsername(token);
             String role = jwtUtil.getRole(token);
-
-            System.out.println(username);
-            System.out.println(role);
 
             UserEntity userEntity =
                     UserEntity.builder().username(username).password("temppaswwrod").role(Role.valueOf(role)).build();

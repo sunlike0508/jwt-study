@@ -1,6 +1,7 @@
 package com.security.config;
 
 
+import java.util.Collections;
 import com.security.jwt.JWTFilter;
 import com.security.jwt.JWTUtil;
 import com.security.jwt.LoginFilter;
@@ -16,6 +17,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
 
 @Configuration
 @EnableWebSecurity
@@ -44,6 +46,18 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filter(HttpSecurity httpSecurity) throws Exception {
+
+        httpSecurity.cors(cors -> cors.configurationSource(request -> {
+            CorsConfiguration corsConfiguration = new CorsConfiguration();
+            corsConfiguration.setAllowedOrigins(Collections.singletonList("http://localhost:8080"));
+            corsConfiguration.setAllowedMethods(Collections.singletonList("*"));
+            corsConfiguration.setAllowCredentials(true);
+            corsConfiguration.setAllowedHeaders(Collections.singletonList("*"));
+            corsConfiguration.setMaxAge(3600L);
+            corsConfiguration.setExposedHeaders(Collections.singletonList("Authorization"));
+
+            return corsConfiguration;
+        }));
 
         httpSecurity.httpBasic(AbstractHttpConfigurer::disable).formLogin(AbstractHttpConfigurer::disable)
                 .csrf(AbstractHttpConfigurer::disable);
