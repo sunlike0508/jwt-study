@@ -1,13 +1,13 @@
-package security.jwt.service;
+package com.security.service;
 
 import java.util.Optional;
+import com.security.entity.UserEntity;
+import com.security.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import security.jwt.entity.UserEntity;
-import security.jwt.repository.UserRepository;
 
 
 @Service

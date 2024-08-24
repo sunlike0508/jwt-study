@@ -1,14 +1,14 @@
-package security.jwt.service;
+package com.security.service;
 
 
+import com.security.dto.JoinDTO;
+import com.security.entity.Role;
+import com.security.entity.UserEntity;
+import com.security.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import security.jwt.dto.JoinDTO;
-import security.jwt.entity.Role;
-import security.jwt.entity.UserEntity;
-import security.jwt.repository.UserRepository;
 
 @Service
 @RequiredArgsConstructor

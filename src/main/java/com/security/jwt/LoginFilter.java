@@ -1,4 +1,4 @@
-package security.jwt.filter;
+package com.security.jwt;
 
 
 import jakarta.servlet.FilterChain;

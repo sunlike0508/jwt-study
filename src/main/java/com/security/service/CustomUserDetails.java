@@ -1,12 +1,12 @@
-package security.jwt.service;
+package com.security.service;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import com.security.entity.UserEntity;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import security.jwt.entity.UserEntity;
 
 @RequiredArgsConstructor(access = AccessLevel.PACKAGE)
 public class CustomUserDetails implements UserDetails {

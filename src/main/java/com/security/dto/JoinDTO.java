@@ -1,4 +1,4 @@
-package security.jwt.dto;
+package com.security.dto;
 
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Getter;

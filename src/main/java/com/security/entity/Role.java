@@ -1,4 +1,4 @@
-package security.jwt.entity;
+package com.security.entity;
 
 public enum Role {
 
