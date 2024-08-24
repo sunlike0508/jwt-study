@@ -26,7 +26,8 @@ public class JoinService {
         String encodedPassword = bCryptPasswordEncoder.encode(joinDTO.getPassword());
 
         UserEntity userEntity =
-                UserEntity.builder().username(joinDTO.getUsername()).password(encodedPassword).role(Role.USER).build();
+                UserEntity.builder().username(joinDTO.getUsername()).password(encodedPassword).role(Role.ROLE_ADMIN)
+                        .build();
 
         userRepository.save(userEntity);
     }

@@ -3,12 +3,11 @@ package com.security.service;
 import java.util.ArrayList;
 import java.util.Collection;
 import com.security.entity.UserEntity;
-import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-@RequiredArgsConstructor(access = AccessLevel.PACKAGE)
+@RequiredArgsConstructor
 public class CustomUserDetails implements UserDetails {
 
     private final transient UserEntity userEntity;

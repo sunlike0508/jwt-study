@@ -1,6 +1,7 @@
 package com.security.config;
 
 
+import com.security.jwt.JWTFilter;
 import com.security.jwt.JWTUtil;
 import com.security.jwt.LoginFilter;
 import lombok.RequiredArgsConstructor;
@@ -44,16 +45,17 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filter(HttpSecurity httpSecurity) throws Exception {
 
-        httpSecurity.headers(AbstractHttpConfigurer::disable).httpBasic(AbstractHttpConfigurer::disable)
-                .formLogin(AbstractHttpConfigurer::disable).csrf(AbstractHttpConfigurer::disable);
+        httpSecurity.httpBasic(AbstractHttpConfigurer::disable).formLogin(AbstractHttpConfigurer::disable)
+                .csrf(AbstractHttpConfigurer::disable);
 
         httpSecurity.authorizeHttpRequests(
-                (auth) -> auth.requestMatchers("/", "/login", "/join", "/join/new").permitAll()
-                        .requestMatchers("/admin").hasRole("ADMIN").requestMatchers("/my/**")
-                        .hasAnyRole("ADMIN", "USER").anyRequest().authenticated());
+                auth -> auth.requestMatchers("/", "/login", "/join", "/join/new").permitAll().requestMatchers("/admin")
+                        .hasRole("ADMIN").anyRequest().authenticated());
 
         httpSecurity.addFilterAt(new LoginFilter(authenticationManager(authenticationConfiguration), jwtUtil),
                 UsernamePasswordAuthenticationFilter.class);
+
+        httpSecurity.addFilterBefore(new JWTFilter(jwtUtil), LoginFilter.class);
 
 
         // 세션 설정 : JWT를 통한 인증/인가를 위해서 세션을 stateless 상태로 설정
