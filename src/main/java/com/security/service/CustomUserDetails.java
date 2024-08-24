@@ -11,7 +11,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 @RequiredArgsConstructor(access = AccessLevel.PACKAGE)
 public class CustomUserDetails implements UserDetails {
 
-    private final UserEntity userEntity;
+    private final transient UserEntity userEntity;
 
 
     @Override

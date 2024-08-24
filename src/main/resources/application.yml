@@ -16,6 +16,8 @@ spring:
       hibernate:
         #show_sql: true
         format_sql: true
+  jwt:
+    secret: RF2AmKuP0HcsYDR3bdf3mMM5Ud5aqoZp
 
 logging:
   level:

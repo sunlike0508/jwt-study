@@ -1,6 +1,7 @@
 package com.security.config;
 
 
+import com.security.jwt.JWTUtil;
 import com.security.jwt.LoginFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -21,6 +22,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfig {
 
     private final AuthenticationConfiguration authenticationConfiguration;
+    private final JWTUtil jwtUtil;
 
 
     /**
@@ -50,7 +52,7 @@ public class SecurityConfig {
                         .requestMatchers("/admin").hasRole("ADMIN").requestMatchers("/my/**")
                         .hasAnyRole("ADMIN", "USER").anyRequest().authenticated());
 
-        httpSecurity.addFilterAt(new LoginFilter(authenticationManager(authenticationConfiguration)),
+        httpSecurity.addFilterAt(new LoginFilter(authenticationManager(authenticationConfiguration), jwtUtil),
                 UsernamePasswordAuthenticationFilter.class);
 
 
